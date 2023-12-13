@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Hockey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Juego de Hockey</h1>
+  <p>Mueve la paleta para golpear el puck y anotar en la portería del oponente.</p>
+
+  <canvas id="hockeyCanvas" width="800" height="400"></canvas>
+  <p id="score">Goles: 0</p>
+
+  <script>
+    const canvas = document.getElementById('hockeyCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const paddleWidth = 20;
+    const paddleHeight = 100;
+    const puckSize = 15;
+
+    let playerY = (canvas.height - paddleHeight) / 2;
+    let opponentY = (canvas.height - paddleHeight) / 2;
+    let playerSpeed = 5;
+    let puckX = canvas.width / 2;
+    let puckY = canvas.height / 2;
+    let puckSpeedX = 5;
+    let puckSpeedY = 5;
+    let score = 0;
+
+    function draw() {
+      // Limpiar el lienzo
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Dibujar paletas y puck
+      drawPaddle(0, playerY, paddleWidth, paddleHeight, 'blue');
+      drawPaddle(canvas.width - paddleWidth, opponentY, paddleWidth, paddleHeight, 'red');
+      drawPuck(puckX, puckY, puckSize, 'black');
+
+      // Dibujar la portería
+      ctx.fillStyle = "#000";
+      ctx.fillRect(canvas.width / 2 - 5, 0, 10, canvas.height);
+
+      // Dibujar el marcador
+      ctx.font = "20px Arial";
+      ctx.fillText("Goles: " + score, canvas.width / 2 - 40, 30);
+
+      // Mover la paleta del oponente automáticamente
+      opponentY += (puckY - (opponentY + paddleHeight / 2)) * 0.1;
+
+      // Mover el puck
+      puckX += puckSpeedX;
+      puckY += puckSpeedY;
+
+      // Verificar colisiones con las paletas y bordes
+      checkCollision();
+
+      // Animación
+      requestAnimationFrame(draw);
+    }
+
+    function drawPaddle(x, y, width, height, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+    }
+
+    function drawPuck(x, y, size, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function checkCollision() {
+      // Colisión con paletas
+      if (
+        puckX - puckSize / 2 < paddleWidth &&
+        puckY > playerY &&
+        puckY < playerY + paddleHeight
+      ) {
+        puckSpeedX = -puckSpeedX;
+      }
+
+      if (
+        puckX + puckSize / 2 > canvas.width - paddleWidth &&
+        puckY > opponentY &&
+        puckY < opponentY + paddleHeight
+      ) {
+        puckSpeedX = -puckSpeedX;
+      }
+
+      // Colisión con bordes superior e inferior
+      if (puckY - puckSize / 2 < 0 || puckY + puckSize / 2 > canvas.height) {
+        puckSpeedY = -puckSpeedY;
+      }
+
+      // Anotación de goles
+      if (puckX - puckSize / 2 < 0) {
+        // Gol del oponente
+        resetPuck();
+        score++;
+        updateScore();
+      }
+
+      if (puckX + puckSize / 2 > canvas.width) {
+        // Gol del jugador
+        resetPuck();
+        score++;
+        updateScore();
+      }
+    }
+
+    function resetPuck() {
+      puckX = canvas.width / 2;
+      puckY = canvas.height / 2;
+    }
+
+    function updateScore() {
+      document.getElementById("score").textContent = "Goles: " + score;
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.code === 'ArrowUp' && playerY > 0) {
+        playerY -= playerSpeed;
+      }
+
+      if (event.code === 'ArrowDown' && playerY + paddleHeight < canvas.height) {
+        playerY += playerSpeed;
+      }
+    });
+
+    // Iniciar el juego
+    draw();
+  </script>
+
+</body>
+</html>

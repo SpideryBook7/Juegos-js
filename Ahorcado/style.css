@@ -1,0 +1,83 @@
+.hidden {
+    color: transparent;
+}
+
+* {
+    height: 100;
+    width: 100;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+    background-image: url("fondo.jpg");
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: #da0909;
+}
+
+p{
+    color: aqua;
+}
+
+#wordContainer {
+    margin-top: 40px;
+}
+
+.letter {
+    margin: 0 7px;
+    position: relative;
+    text-align: center;
+}
+
+.letter::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    min-width: 12px;
+}
+
+#startButton {
+    margin-top: 20px;
+    appearance: none;
+    font-family: sans-serif;
+    border: none;
+    width: 300px;
+    padding: 10px;
+    background: #da0909;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+#usedLetters {
+    margin-top: 20px;
+    font-size: 30px;
+    color: yellow;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.letter-box {
+    display: inline-block;
+    width: 30px;
+    /* Ajusta el ancho según tus preferencias */
+    height: 30px;
+    /* Ajusta la altura según tus preferencias */
+    border: 1px solid #333;
+    text-align: center;
+    line-height: 30px;
+    /* Ajusta la altura del texto verticalmente al centro */
+    margin: 5px;
+    /* Ajusta el margen según tus preferencias */
+}

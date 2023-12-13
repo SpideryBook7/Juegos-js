@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahorcado</title>
+    <link href="http://fonts.cdnfonts.com/css/sf-pixelate" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" >
+    <script type="text/javascript" src="ahorcado.js" defer></script>
+    <style>
+        img{
+            width: 330px;
+        }
+        .container{
+            display: flex;
+            text-align: center;
+        }
+        h2{
+            text-align: center;
+            background: black;
+            color: rgb(0, 0, 245);
+            border-radius: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>El ahorcado.</h2>
+    <img src="Captura de pantalla 2023-12-01 152429.png" alt="">
+    <div>
+        <canvas id="canvas"></canvas>
+        <div id="usedLetters"></div>
+    </div>
+    <div id="usedLetters"></div>
+    <div id="wordContainer"></div>
+    <div class="container">
+        <h2>Paises</h2>
+        <h2>Frutas</h2>
+        <h2>Animales</h2>
+    </div>
+    <button class="botton1" id="startButton" style="color: black;">Iniciar Juego</button>
+</body>
+</html>
